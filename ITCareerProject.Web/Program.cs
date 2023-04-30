@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using ITCareerProject.Data;
+using ITCareerProject.Services.EventsService;
 using ITCareerProject.Services.RolesService;
 using ITCareerProject.Services.SeederService;
 using ITCareerProject.Services.UsersService;
@@ -42,6 +43,7 @@ namespace ITCareerProject
             builder.Services.AddTransient<ISeederService, SeederService>();
             builder.Services.AddTransient<IUsersService, UsersService>();
             builder.Services.AddTransient<IRolesService, RolesService>();
+            builder.Services.AddTransient<IEventsService, EventsService>();
 
             var app = builder.Build();
 

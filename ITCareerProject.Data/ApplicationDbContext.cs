@@ -17,5 +17,9 @@ namespace ITCareerProject.Data
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Event> Events { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
     }
 }

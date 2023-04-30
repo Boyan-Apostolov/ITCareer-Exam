@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using ITCareerProject.Data;
+using ITCareerProject.Services.DTOs.Events;
 using ITCareerProject.Services.DTOs.Roles;
 using ITCareerProject.Services.DTOs.Users;
 
@@ -24,6 +25,11 @@ namespace GlobalConstants.Mappings
             CreateMap<IdentityRole, RoleDto>();
             CreateMap<RoleDto, BaseRoleDto>();
             CreateMap<BaseRoleDto, RoleDto>();
+
+            CreateMap<Event, EventDto>();
+            CreateMap<EventDto, Event>();
+            CreateMap<Event, CreateEventDto>();
+            CreateMap<CreateEventDto, Event>();
         }
     }
 }
