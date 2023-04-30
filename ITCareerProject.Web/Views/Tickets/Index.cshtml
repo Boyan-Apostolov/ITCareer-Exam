@@ -34,9 +34,12 @@
                 <div class="d-inline-flex justify-content-center col-2">
                 </div>
                 <div class="d-inline-flex justify-content-center col-3 flex-column align-items-center">
-                    <button class="btn btn-danger admin-delete-ticket" data-id="@ticketDto.Id" style="margin-bottom: 3px">
-                        <i class="fas fa-trash-alt"></i> (Admin) Delete ticket
-                    </button>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <button class="btn btn-danger admin-delete-ticket" data-id="@ticketDto.Id" style="margin-bottom: 3px">
+                            <i class="fas fa-trash-alt"></i> (Admin) Delete ticket
+                        </button>
+                    }
 
                     @if (ticketDto.User.Id == userId)
                     {

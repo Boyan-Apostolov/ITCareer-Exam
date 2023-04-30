@@ -29,19 +29,19 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fas fa-user m-1"></i> Users
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index"> <i class="fas fa-users m-1"></i> All users</a>
-                                    @if (User.IsInRole(Enum.GetName(DefaultRoles.Administrator)))
-                                    {
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Create"><i class="fas fa-user-plus m-1"></i> New user</a>
-                                    }
-                                </ul>
-                            </div>
+                            @if (User.IsInRole(Enum.GetName(DefaultRoles.Administrator)))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-user m-1"></i> Users
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index"> <i class="fas fa-users m-1"></i> All users</a>
 
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Create"><i class="fas fa-user-plus m-1"></i> New user</a>
+                                    </ul>
+                                </div>
+                            }
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle text-white" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="far fa-calendar-alt"></i> Events
