@@ -46,10 +46,9 @@ namespace ITCareerProject.Services.UsersService
 
         }
 
-        public async Task<PaginatedUsersCollectionDto> GetPaginatedAndFilteredUsers(int? page, int? pageSize, string keyword)
+        public async Task<ICollection<BaseUserDto>> GetFilteredUsers(string keyword)
         {
             var users = await GetAllAsync();
-            var paginator = new Paginator(users.Count, page, pageSize, "Users", true);
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
@@ -62,16 +61,7 @@ namespace ITCareerProject.Services.UsersService
                     .ToArray();
             }
 
-            var paginatedUsers =
-                users
-                    .Skip((paginator.CurrentPage - 1) * paginator.PageSize)
-                    .Take(paginator.PageSize);
-
-            return new PaginatedUsersCollectionDto()
-            {
-                Users = paginatedUsers.ToList(),
-                Paginator = paginator
-            };
+            return users.ToList();
         }
 
         public async Task<BaseUserDto?> GetByIdAsync(string userId)
@@ -99,8 +89,7 @@ namespace ITCareerProject.Services.UsersService
 
             if (createdUser.Succeeded)
             {
-                var role = await _rolesService.GetNameById(userDto.SelectedRole);
-                await _userManager.AddToRoleAsync(userToBeCreated, role);
+                await _userManager.AddToRoleAsync(userToBeCreated, DefaultRoles.User.ToString());
             }
             else
             {
@@ -124,15 +113,6 @@ namespace ITCareerProject.Services.UsersService
             domainUser.NormalizedEmail = userDto.Email.Normalize();
             domainUser.UserName = userDto.Username;
             domainUser.NormalizedUserName = userDto.Username.Normalize();
-
-            var currentRoleName = await _rolesService.GetRoleNameByUserId(userDto.Id);
-            var newRole = await _rolesService.GetNameById(userDto.RoleName);
-
-            if (currentRoleName != newRole)
-            {
-                await _userManager.RemoveFromRoleAsync(domainUser, currentRoleName);
-                await _userManager.AddToRoleAsync(domainUser, newRole);
-            }
 
             await _dbContext.SaveChangesAsync();
         }

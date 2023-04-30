@@ -11,7 +11,7 @@ namespace ITCareerProject.Services.UsersService
     public interface IUsersService
     {
         Task<ICollection<BaseUserDto>> GetAllAsync();
-        Task<PaginatedUsersCollectionDto> GetPaginatedAndFilteredUsers(int? page, int? pageSize, string keyword);
+        Task<ICollection<BaseUserDto>> GetFilteredUsers(string keyword);
         Task<BaseUserDto?> GetByIdAsync(string userId);
         Task CreateAsync(CreateUserDto userDto);
         Task EditAsync(BaseUserDto userDto);

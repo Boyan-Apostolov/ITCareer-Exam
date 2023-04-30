@@ -1,8 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    var index = 0;
 }
+@if(User.IsInRole("Administrator")){
 
-<div class="text-center">
-    <h1 class="display-4">Business Manager</h1>
-    <h4 style="margin-top: 30px">Manage time-off requests, teams, projects and the people who work on them - all in one place. For free.</h4>
-</div>
+    @*@if (Model.Roles.Any())
+    {
+        <div class="card rounded-0">
+            <h3 class="card-header h5 rounded-0">
+                Role with associated users count
+            </h3>
+            <div class="card-block">
+                <ul class="list-group">
+                    @foreach (var roleDto in Users)
+                    {
+                        <li class="list-group-item d-flex @(index % 2 == 0 ? "bg-white" : "bg-light") justify-content-between align-items-center">
+                            <div class="col-10 d-flex justify-content-between align-items-center m-2">
+                                @(roleDto.Name)
+                                <span class="badge badge-secondary bg-secondary">@(roleDto.UsersCount) Users</span>
+                            </div>
+                        </li>
+                        index++;
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h6>No Roles found!</h6>
+    }*@
+}
+else
+{
+    
+    <div class="text-center">
+        <h1 class="display-4">Cool events!</h1>
+        <h4 style="margin-top: 30px">Do you like going to concerts? Book a ticket for an event with us!</h4>
+    </div>    
+}

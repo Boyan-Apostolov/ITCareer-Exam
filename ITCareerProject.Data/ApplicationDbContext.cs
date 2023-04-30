@@ -13,7 +13,7 @@ namespace ITCareerProject.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=IT-Career-Exam;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=.;Database=Cool-events-Exam;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }

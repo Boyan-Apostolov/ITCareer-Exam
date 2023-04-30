@@ -3,8 +3,6 @@
 
 @{
     ViewData["Title"] = "Create";
-
-    var roles = ((IEnumerable<KeyValuePair<string, string>>)this.ViewBag.AvailableRoles).Select(x => new SelectListItem(x.Value, x.Key.ToString()));
 }
 
 <div class="card light-shadow m-0 m-auto col-5">
@@ -41,12 +39,6 @@
                     <label asp-for="Password" class="control-label"></label>
                     <input asp-for="Password" class="form-control" type="password"/>
                     <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SelectedRole" class="control-label">Role</label>
-                    <select asp-for="SelectedRole" class="form-control form-control-lg" asp-items="roles">
-                        <option value="" selected="">Select role...</option>
-                    </select>
                 </div>
                 <br/>
                 <div class="form-group d-flex justify-content-evenly">

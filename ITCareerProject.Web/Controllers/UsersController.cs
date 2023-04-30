@@ -15,7 +15,7 @@ using ITCareerProject.Services.UsersService;
 
 namespace ITCareerProject.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class UsersController : Controller
     {
         private readonly IUsersService _usersService;
@@ -28,9 +28,9 @@ namespace ITCareerProject.Controllers
             _rolesService = rolesService;
         }
 
-        public async Task<IActionResult> Index(int? page = 1, int? pageSize = 10, string keyword = null)
+        public async Task<IActionResult> Index(string keyword = null)
         {
-            var users = await _usersService.GetPaginatedAndFilteredUsers(page, pageSize, keyword);
+            var users = await _usersService.GetFilteredUsers(keyword);
             return View(users);
         }
 
@@ -45,16 +45,14 @@ namespace ITCareerProject.Controllers
             return View(user);
         }
 
-        [Authorize(Roles = "Administrator")]
+        
         public IActionResult Create()
         {
-            ViewBag.AvailableRoles = _rolesService.GetAllAsKeyValuePairs();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Create(CreateUserDto userDto)
         {
             if (ModelState.IsValid)
@@ -71,14 +69,12 @@ namespace ITCareerProject.Controllers
 
             if (ModelState.ErrorCount != 0)
             {
-                ViewBag.AvailableRoles = _rolesService.GetAllAsKeyValuePairs();
                 return View(userDto);
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(string id)
         {
             var user = await _usersService.GetByIdAsync(id);
@@ -93,9 +89,10 @@ namespace ITCareerProject.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Edit(string id, BaseUserDto userDto)
         {
+            ModelState.Remove(nameof(BaseUserDto.RoleName));
+
             if (id != userDto.Id)
             {
                 return NotFound();
@@ -111,8 +108,6 @@ namespace ITCareerProject.Controllers
             return View(userDto);
         }
 
-
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _usersService.GetByIdAsync(id);
@@ -126,7 +121,6 @@ namespace ITCareerProject.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             await _usersService.DeleteAsync(id);
