@@ -1,9 +1,13 @@
 ﻿@using ITCareerProject.Services
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using System.Security.Claims
 @model ITCareerProject.Services.DTOs.Events.EventDto
 
 @{
     ViewData["Title"] = "Details";
+
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var currentUserHasTicketForEvent = Model.Tickets.Any(t => t.UserId == userId);
 }
 
 <div class="card light-shadow m-0 m-auto col-5">
@@ -45,21 +49,36 @@
             </button>
         </a>
 
+        @if (currentUserHasTicketForEvent)
+        {
+            <button class="btn btn-danger delete-ticket" data-id="@Model.Id">
+                <i class="fas fa-trash-alt"></i> Delete ticket
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-success buy-ticket" data-id="@Model.Id">
+                <i class="fas fa-ticket-alt"></i> Buy ticket
+            </button>
+        }
+
         @if (User.IsInRole(Enum.GetName(DefaultRoles.Administrator)))
         {
 
-        <a asp-action="Edit" asp-route-id="@Model.Id">
-            <button class="btn btn-warning">
-                <i class="fas fa-edit"></i> Edit
-            </button>
-        </a>
+            <a asp-action="Edit" asp-route-id="@Model.Id">
+                <button class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </button>
+            </a>
 
 
-        <a asp-action="Delete" asp-route-id="@Model.Id">
-            <button class="btn btn-danger">
-                <i class="fas fa-trash-alt"></i> Delete
-            </button>
-        </a>
+            <a asp-action="Delete" asp-route-id="@Model.Id">
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+            </a>
         }
     </div>
 </div>
+
+<script src="~/js/tickets.js"></script>

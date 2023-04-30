@@ -9,6 +9,10 @@ namespace ITCareerProject.Data
 {
     public class Event
     {
+        public Event()
+        {
+            this.Tickets = new List<Ticket>();
+        }
         public int Id { get; set; }
 
         public string Name { get; set; }

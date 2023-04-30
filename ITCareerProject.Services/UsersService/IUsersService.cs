@@ -17,5 +17,6 @@ namespace ITCareerProject.Services.UsersService
         Task EditAsync(BaseUserDto userDto);
         Task DeleteAsync(string userId);
         Task<bool> UserExists(string userId);
+        int GetUsersCount();
     }
 }

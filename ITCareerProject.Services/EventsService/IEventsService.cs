@@ -16,5 +16,6 @@ namespace ITCareerProject.Services.EventsService
         Task CreateAsync(CreateEventDto eventDto);
         Task EditAsync(EventDto eventDto);
         Task DeleteAsync(int eventId);
+        int GetEventsCount();
     }
 }

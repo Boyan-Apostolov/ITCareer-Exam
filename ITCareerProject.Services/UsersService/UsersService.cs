@@ -134,5 +134,10 @@ namespace ITCareerProject.Services.UsersService
                 .ApplicationUsers
                 .AnyAsync(u => u.Id == userId);
         }
+
+        public int GetUsersCount()
+        {
+            return _dbContext.ApplicationUsers.Count();
+        }
     }
 }

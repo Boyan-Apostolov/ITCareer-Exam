@@ -7,6 +7,7 @@ using ITCareerProject.Data;
 using ITCareerProject.Services.EventsService;
 using ITCareerProject.Services.RolesService;
 using ITCareerProject.Services.SeederService;
+using ITCareerProject.Services.TicketsService;
 using ITCareerProject.Services.UsersService;
 
 namespace ITCareerProject
@@ -44,6 +45,7 @@ namespace ITCareerProject
             builder.Services.AddTransient<IUsersService, UsersService>();
             builder.Services.AddTransient<IRolesService, RolesService>();
             builder.Services.AddTransient<IEventsService, EventsService>();
+            builder.Services.AddTransient<ITicketsService, TicketsService>();
 
             var app = builder.Build();
 

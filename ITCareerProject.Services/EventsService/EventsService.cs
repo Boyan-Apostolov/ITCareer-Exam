@@ -109,5 +109,10 @@ namespace ITCareerProject.Services.EventsService
             _dbContext.Events.Remove(domainEvent);
             await _dbContext.SaveChangesAsync();
         }
+
+        public int GetEventsCount()
+        {
+            return _dbContext.Events.Count();
+        }
     }
 }

@@ -1,19 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using ITCareerProject.Services.EventsService;
+using ITCareerProject.Services.TicketsService;
+using ITCareerProject.Services.UsersService;
 
 namespace ITCareerProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IUsersService _usersService;
+        private readonly IEventsService _eventsService;
+        private readonly ITicketsService _ticketsService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IUsersService usersService,
+            IEventsService eventsService,
+            ITicketsService ticketsService)
         {
-            _logger = logger;
+            _usersService = usersService;
+            _eventsService = eventsService;
+            _ticketsService = ticketsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Administrator"))
+            {
+                ViewBag.UsersCount = _usersService.GetUsersCount();
+                ViewBag.EventsCount = _eventsService.GetEventsCount();
+                ViewBag.TicketsCount = _ticketsService.GetTicketsCount();
+            }
             return View();
         }
 

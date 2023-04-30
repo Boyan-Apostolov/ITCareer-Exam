@@ -4,6 +4,7 @@ using ITCareerProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ITCareerProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230430090646_Tickets_UserId_Changed-Type")]
+    partial class Tickets_UserId_ChangedType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,18 +133,22 @@ namespace ITCareerProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("EventId");
 
                     b.ToTable("Tickets");
                 });
@@ -282,15 +288,15 @@ namespace ITCareerProject.Data.Migrations
 
             modelBuilder.Entity("ITCareerProject.Data.Ticket", b =>
                 {
-                    b.HasOne("ITCareerProject.Data.Event", "Event")
+                    b.HasOne("ITCareerProject.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Tickets")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ITCareerProject.Data.ApplicationUser", "ApplicationUser")
+                    b.HasOne("ITCareerProject.Data.Event", "Event")
                         .WithMany("Tickets")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
